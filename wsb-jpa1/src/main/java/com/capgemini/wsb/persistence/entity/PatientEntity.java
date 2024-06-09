@@ -2,9 +2,7 @@ package com.capgemini.wsb.persistence.entity;
 
 import java.time.LocalDate;
 import java.util.Collection;
-
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "PATIENT")
@@ -33,8 +31,9 @@ public class PatientEntity {
 	@Column(nullable = false, length = 10)
 	private LocalDate dateOfBirth;
 
-	@OneToMany(mappedBy = "patient", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-	private Collection<VisitEntity> visits;
+@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Określa relację "jeden do wielu" między obiektem Patient a VisitEntity
+private Collection<VisitEntity> visits; // Definiuje kolekcję wizyt powiązanych z danym pacjentem
+
 
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
 	@JoinTable(
